@@ -2,26 +2,31 @@
 using namespace std;
 
 void print_vetor(int vet[], int n) {
-    for(int i=0; i<n; i++) {
-        if(i == 0)
-            cout << "[";
+    for(int i=0; i<n; i++){
         if(i<n-1)
             cout << vet[i] << ", ";
         else
-            cout << vet[i] << "]" << endl;
+            cout << vet[i];
+    }
+}
+
+void soma_vetor_novo(int vet1[], int vet2[], int n) {
+    if(n>1){
+        vet2[0] = vet1[0] + vet1[1];
+        soma_vetor_novo(vet1+1, vet2+1, n-1);
     }
 }
 
 void triangulo_recursivo(int vet[], int n){
-    if(n >= 0){
-        //Precisa-se criar um vetor e atribuir os elementos somando
+    if(n > 0 && vet != nullptr){
+        
         int vet2[n-1];
-        for(int i=0; i<n-1; i++){
-            vet2[i] = vet[i] + vet[i+1];
-        }
+        soma_vetor_novo(vet, vet2, n);
 
         triangulo_recursivo(vet2, n-1);
+        cout << "["; 
         print_vetor(vet, n);
+        cout << "]" << endl;
     }
 }
 
