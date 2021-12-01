@@ -79,7 +79,7 @@ Matriz *Matriz::soma(Matriz *B){
 
 // Multiplica matrizes
 Matriz *Matriz::multiplica(Matriz *B) {
-	// Verifica se a linha da matriz A é exatamente igual a das linhas da matriz B
+	// Verifica se a quantidades de linhas da matriz B é exatamente igual a quantidade de colunas da matriz A
 	if(B->linhas() == col){
 		//Aloca a matriz C		
 		Matriz *C = new (std::nothrow) Matriz(lin, B->colunas());
@@ -87,6 +87,7 @@ Matriz *Matriz::multiplica(Matriz *B) {
 			return nullptr;
 		}
 		//
+		//Na nova matiz C na posicao matriz[l][c] adiciona a multiplicação e soma dos elementos da linha de A e dos elementos da coluna de B
 		for(int l=0; l<C->linhas(); l++){
 			for(int c=0; c<C->colunas(); c++){
 				int somaTotal = 0;
