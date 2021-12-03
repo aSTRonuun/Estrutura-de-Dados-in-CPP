@@ -1,6 +1,7 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
 #include "Point.h"
+#include <cmath>
 
 /**
  * Classe 'Circle' que implementa um círculo
@@ -48,14 +49,15 @@ public:
 
     // Operação que calcula a área do círculo
     double area() {
-       return 3.14159265 * pow(radius, 2) ;
+       return M_PI * pow(radius, 2) ;
     }
 
     // Operação que verifica se um dado ponto p dado 
     // como entrada está ou não dentro do círculo
     bool interior(Point& p) {
-        double distancia = pow(this->center.getX() - p.getX(), 2) + pow(this->center.getY() - p.getY(), 2);
-        if(distancia < pow(radius, 2)){
+        //Usando o metodo distance do centro até o p para obter a distancia entre o centro e o ponto  
+        double distancia = center.distance(p);
+        if(distancia <= radius){
             return true;
         }
         return false;
