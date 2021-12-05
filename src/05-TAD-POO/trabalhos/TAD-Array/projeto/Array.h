@@ -31,20 +31,23 @@ public:
     //nesse ponto, os atributos de this já foram inicializados, 
     //mas você precisa alterá-los para copiar os valores de other
     void operator=(const Array& other) {
-        //inicialize this->capacity com other.capacity
-        this->capacity = other.capacity;
-        //se this->ptr não for nulo, devolva a memória com delete[]
-        if(this->ptr != nullptr) {
-            delete[] this->ptr;
-        }
-        //crie nova memória para this->ptr do tamanho de other.capacity
-        this->ptr = new (nothrow) int[other.capacity];
-        if(this->ptr == nullptr) {
-            cout << "Náo foi possivel alocar memoria" << endl;
-        }
-        //copie os dados de other.ptr para this->ptr
-        for(int i=0; i<this->capacity; i++) {
-            this->ptr[i] = other.ptr[i];
+        //verifica se o this esta recebendo ele mesmo
+        if(this->ptr != other.ptr) {
+            //inicialize this->capacity com other.capacity
+            this->capacity = other.capacity;
+            //se this->ptr não for nulo, devolva a memória com delete[]
+            if(this->ptr != nullptr) {
+                delete[] this->ptr;
+            }
+            //crie nova memória para this->ptr do tamanho de other.capacity
+            this->ptr = new (nothrow) int[other.capacity];
+            if(this->ptr == nullptr) {
+                cout << "Náo foi possivel alocar memoria" << endl;
+            }
+            //copie os dados de other.ptr para this->ptr
+            for(int i=0; i<this->capacity; i++) {
+                this->ptr[i] = other.ptr[i];
+            }
         }
     }
 
@@ -109,5 +112,6 @@ public:
     //em um certo índice do Array.
     int& operator[](int index) {
         //devolva o elemento na posição index
+        return ptr[index];
     }
 };
