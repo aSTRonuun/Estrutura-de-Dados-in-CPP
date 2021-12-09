@@ -93,7 +93,23 @@ int SeqList::get(int i) const {
 // Deve ajustar(diminuir) o tamanho da lista caso 
 // ela fique grande demais e com poucos elementos
 void SeqList::remove_back() {
-    // TODO
+    if(this->m_capacity - this->m_size < 5){
+        m_array[m_size] = 0;
+        m_size--;
+        return;
+    }
+    m_capacity -= 5;
+    int *new_array = new (nothrow) int[m_capacity];
+    if(new_array == nullptr){
+        cout << "Error ao alocar mémoria" << endl;
+        return;
+    } 
+    for(int i=0; i<m_size; i++){
+        new_array[i] = m_array[i];
+    }
+    delete[] m_array;
+    m_array = new_array;
+    m_size--;
 }
 
 // operador[] sobrecarregado como uma função-membro da classe SeqList
