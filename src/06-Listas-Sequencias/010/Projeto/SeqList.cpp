@@ -93,7 +93,8 @@ int SeqList::get(int i) const {
 // Deve ajustar(diminuir) o tamanho da lista caso 
 // ela fique grande demais e com poucos elementos
 void SeqList::remove_back() {
-    if(this->m_capacity - this->m_size < 5){
+    // Se o vetor tive no maximo 5 elementos a menos do que a capacidade, realoca o vetor para compartar capacidade - 5
+    if(this->m_capacity - this->m_size < 6){
         m_array[m_size] = 0;
         m_size--;
         return;
