@@ -1,0 +1,10 @@
+create
+append 0 10 10 9 8 7 6 5 4 3 2 1
+show
+clone 0
+show
+append 1 5 33 33 33 2 33
+show
+append 0 2 890 777
+show
+exit

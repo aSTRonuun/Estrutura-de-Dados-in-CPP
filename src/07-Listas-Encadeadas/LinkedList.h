@@ -66,7 +66,7 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const LinkedList& l);  
 
     
-    void concat(const LinkedList& lst);
+    void concat(LinkedList& lst);
     
     void removeAll(const Item& x);
     
@@ -231,7 +231,7 @@ std::ostream& operator<<(std::ostream& out, const LinkedList& list) {
 // l1 = [ 1 2 3 4 7 9 8 ] e l2 = [ 7 9 8 ]
 // Restrição: está proibido usar funções auxiliares nesta questão,
 // inclusive qualquer dos operadores sobrecarregados
-void LinkedList::concat(const LinkedList& lst) {
+void LinkedList::concat(LinkedList& lst) {
     if(lst.m_head == nullptr) {
         throw std::underflow_error("empty list");
     }
@@ -279,10 +279,20 @@ void LinkedList::removeAll(const Item& x) {
 // Restrição: está proibido usar funções auxiliares nesta questão,
 // inclusive qualquer dos operadores sobrecarregados
 LinkedList *LinkedList::clone() {
+    if(m_head == nullptr) {
+        throw std::underflow_error("empty list");
+    }
     LinkedList *newLinkedList = new LinkedList();
-    newLinkedList->m_head = m_head;
     newLinkedList->m_size = m_size;
-    
+    Node *current = m_head;
+    newLinkedList->m_head = new Node(current->data, nullptr);
+    current = current->next;
+    Node *newCurrent = newLinkedList->m_head;
+    while(current != nullptr) {
+        newCurrent->next = new Node(current->data, nullptr);
+        current = current->next;
+        newCurrent = newCurrent->next;
+    }
     return newLinkedList;
 }
 
@@ -292,7 +302,28 @@ LinkedList *LinkedList::clone() {
 // Restrição: está proibido usar funções auxiliares nesta questão,
 // inclusive qualquer dos operadores sobrecarregados
 void LinkedList::appendArray(Item v[], int n) {
-    // TODO    
+    Node *current = m_head;
+    // Se a lista estiver vazia, entao o primeiro elemento sera o primeiro da lista
+    if(current == nullptr) {
+        m_head = new Node(v[0], nullptr);
+        m_size++;
+        current = m_head;
+        for(int i=1; i<n; i++) {
+            current->next = new Node(v[i], nullptr);
+            current = current->next;
+            m_size++;
+        }
+        return;
+    }
+    // Se a lista nao estiver vazia, o primeiro elemento da lista v para o final
+    while(current->next != nullptr) {
+        current = current->next;
+    }
+    for(int i=0; i<n; i++) {
+        current->next = new Node(v[i], nullptr);
+        current = current->next;
+        m_size++;
+    }
 }
 
 // Determina se a lista lst, passada por parametro, eh igual 
@@ -302,7 +333,22 @@ void LinkedList::appendArray(Item v[], int n) {
 // Restrição: está proibido usar funções auxiliares nesta questão,
 // inclusive qualquer dos operadores sobrecarregados
 bool LinkedList::equals(const LinkedList& lst) {
-    // TODO
+    if(lst.m_size == 0) {
+        return false;
+    }
+    if(m_size != lst.m_size) {
+        return false;
+    }
+    Node *current = m_head;
+    Node *otherCurrent = lst.m_head;
+    while(current != nullptr) {
+        if(current->data != otherCurrent->data) {
+            return false;
+        }
+        current = current->next;
+        otherCurrent = otherCurrent->next;
+    }
+    return true;
 }
 
 // Inverte a ordem dos nós (o primeiro node passa a ser o último, 
@@ -313,7 +359,19 @@ bool LinkedList::equals(const LinkedList& lst) {
 // Repetindo: está proibido chamar o operador new nesta questão.
 // Restrição: Também não é permitido usar funções auxiliares nesta questão
 void LinkedList::reverse() {
-    // TODO
+    if(m_head == nullptr) {
+        throw std::underflow_error("empty list");
+    }
+    Node *previus, *current, *next;
+    previus = nullptr;
+    current = m_head;
+    while(current != nullptr) {
+        next = current->next;
+        current->next = previus;
+        previus = current;
+        current = next;
+    }
+    m_head = previus;
 }
 
 

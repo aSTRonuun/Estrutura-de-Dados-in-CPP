@@ -1,0 +1,9 @@
+$create
+$append 0 8 2 5 1 7 5 5 5 5
+$show
+lista 0: [ 8 2 5 1 7 5 5 5 5 ]
+$clone 0
+$show
+lista 0: [ 8 2 5 1 7 5 5 5 5 ]
+lista 1: [ 8 2 5 1 7 5 5 5 5 ]
+$exit

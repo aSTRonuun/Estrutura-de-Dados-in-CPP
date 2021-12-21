@@ -1,0 +1,14 @@
+$create
+$append 0 15 1 56 3 2 2 2 6 7 2 2 9 9 2 2 2
+$show
+lista 0: [ 15 1 56 3 2 2 2 6 7 2 2 9 9 2 2 2 ]
+$removeAll 2 0
+$show
+lista 0: [ 15 1 56 3 6 7 9 9 ]
+$removeAll 9 0
+$show
+lista 0: [ 15 1 56 3 6 7 ]
+$removeAll 1 0
+$show
+lista 0: [ 15 56 3 6 7 ]
+$exit

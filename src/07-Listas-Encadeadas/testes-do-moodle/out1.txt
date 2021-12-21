@@ -1,0 +1,34 @@
+$create
+$create
+$push 1 1
+$push 2 1
+$push 3 1
+$push 4 1
+$show
+lista 0: [ ]
+lista 1: [ 1 2 3 4 ]
+$append 1 7 2 2 2 5 2 2 2
+$show
+lista 0: [ ]
+lista 1: [ 1 2 3 4 7 2 2 2 5 2 2 2 ]
+$removeAll 2 1
+$show
+lista 0: [ ]
+lista 1: [ 1 3 4 7 5 ]
+$append 1 3 4 4 4
+$show
+lista 0: [ ]
+lista 1: [ 1 3 4 7 5 3 4 4 4 ]
+$removeAll 4 1
+$show
+lista 0: [ ]
+lista 1: [ 1 3 7 5 3 ]
+$append 0 8 3 3 3 3 3 3 3 3
+$show
+lista 0: [ 8 3 3 3 3 3 3 3 3 ]
+lista 1: [ 1 3 7 5 3 ]
+$removeAll 3 0
+$show
+lista 0: [ 8 ]
+lista 1: [ 1 3 7 5 3 ]
+$exit

@@ -1,0 +1,22 @@
+$create
+$create
+$push 1 0
+$push 2 0
+$push 3 0
+$push 4 0
+$show
+lista 0: [ 1 2 3 4 ]
+lista 1: [ ]
+$concat 1 0
+$show
+lista 0: [ 1 2 3 4 ]
+lista 1: [ 1 2 3 4 ]
+$append 1 8 7 6 5 5
+$show
+lista 0: [ 1 2 3 4 ]
+lista 1: [ 1 2 3 4 8 7 6 5 5 ]
+$concat 0 1
+$show
+lista 0: [ 1 2 3 4 1 2 3 4 8 7 6 5 5 ]
+lista 1: [ 1 2 3 4 8 7 6 5 5 ]
+$exit

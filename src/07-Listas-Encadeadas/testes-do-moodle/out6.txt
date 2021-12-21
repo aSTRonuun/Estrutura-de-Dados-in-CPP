@@ -1,0 +1,17 @@
+$create
+$create
+$append 0 7 1 2 3 4 5 6 7
+$append 1 7 1 2 3 4 8 6 7
+$show
+lista 0: [ 7 1 2 3 4 5 6 7 ]
+lista 1: [ 7 1 2 3 4 8 6 7 ]
+$equals 0 1
+listas diferentes
+$clone 1
+$show
+lista 0: [ 7 1 2 3 4 5 6 7 ]
+lista 1: [ 7 1 2 3 4 8 6 7 ]
+lista 2: [ 7 1 2 3 4 8 6 7 ]
+$equals 1 2
+listas iguais
+$exit

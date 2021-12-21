@@ -1,0 +1,13 @@
+create
+append 0 15 2 2 2 2 4 6 7 2 7 8 2 2 2 2 2
+show
+clone 0
+show
+reverse 1
+show
+removeAll 2 1
+show
+removeAll 2 0
+show
+equals 0 1
+exit

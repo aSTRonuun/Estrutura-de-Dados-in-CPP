@@ -1,0 +1,7 @@
+create
+create
+append 0 5 23 456 -987 -56 7
+show
+append 0 7 2 2 2 2 2 2 2
+show
+exit

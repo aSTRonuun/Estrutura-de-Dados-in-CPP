@@ -1,0 +1,14 @@
+create
+create
+push 1 0
+push 2 0
+push 3 0
+push 4 0
+show
+concat 1 0
+show
+append 1 8 7 6 5 5
+show
+concat 0 1
+show
+exit

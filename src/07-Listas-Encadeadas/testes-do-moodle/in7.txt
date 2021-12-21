@@ -1,0 +1,8 @@
+create
+append 0 9 1 34 5 7 2 2 5 8 9
+show
+reverse 0
+show
+reverse 0
+show
+exit
