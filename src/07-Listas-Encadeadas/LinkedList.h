@@ -236,10 +236,32 @@ void LinkedList::concat(LinkedList& lst) {
         throw std::underflow_error("empty list");
     }
     Node *current = m_head;
+    Node *current2 = lst.m_head;
+    // Se o primeiro elemento da lista atual for nulo, concatena o primeiro 
+    // elemento da lista lst para a primeira posicao da lista atual
+    if(current == nullptr) {
+        current = new Node(current2->data, nullptr);
+        current2 = current2->next;
+        m_head = current;
+        while(current2 != nullptr) {
+            current->next = new Node(current2->data, nullptr);
+            current = current->next;
+            current2 = current2->next;
+            m_size++;
+        }
+        return;
+    }
+    // Se a lista tiver pelo menos um elemento, concatena a lista lst ao final da lista atual
     while(current->next != nullptr) {
         current = current->next;
     }
-    current->next = lst.m_head;
+    while(current2 != nullptr) {
+        current->next = new Node(current2->data, nullptr);
+        current = current->next;
+        current2 = current2->next;
+        m_size++;
+    }
+    return;
 }
 
 // Remove da lista todas as ocorrencias do Item x.
