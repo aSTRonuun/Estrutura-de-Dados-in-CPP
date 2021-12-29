@@ -21,19 +21,54 @@ vector<Pos> get_vizinhos(Pos p){
     return {{p.l, p.c - 1}, {p.l - 1, p.c}, {p.l, p.c + 1}, {p.l + 1, p.c}};
 }
 
-void rota_fuga(vector<string> &matriz, Pos inicio, Pos fim) {
+bool valid_path(vector<string> &matriz, Pos p){
+    int cont = 0;
+    for(Pos vizinho : get_vizinhos(p)){
+        if(matriz[vizinho.l][vizinho.c] == '#') 
+            cont++;
+    }
+    if(cont >= 3){
+        return true;
+    }
+    return false;
+}
+
+
+
+bool rota_fuga(vector<string> &matriz, Pos inicio, Pos fim) {
     Stack<Pos> pilha;
     pilha.push(inicio);
+    matriz[inicio.l][inicio.c] = '.';
     while(!pilha.empty()){
         Pos p = pilha.top();
-        pilha.pop();
         if(p.l == fim.l && p.c == fim.c){
-            return;
+            return true;
         }
+        vector<Pos> vizinhos;
         for(Pos vizinho : get_vizinhos(p)){
             if(matriz[vizinho.l][vizinho.c] == ' '){
-                matriz[vizinho.l][vizinho.c] = '.';
-                pilha.push(vizinho);
+                vizinhos.push_back(vizinho);  
+            }
+        }
+        if(vizinhos.size() == 0){
+            matriz[p.l][p.c] = 'x';
+            pilha.pop();
+        }else{
+            Pos vizinho = vizinhos[rand() % vizinhos.size()];
+            matriz[vizinho.l][vizinho.c] = '.';
+            show(matriz);
+            pilha.push(vizinho);
+        }
+         
+    }
+    return false;
+}
+
+void remover_x(vector<string> &matriz){
+    for(int i = 0; i < matriz.size(); i++){
+        for(int j = 0; j < matriz[i].size(); j++){
+            if(matriz[i][j] == 'x'){
+                matriz[i][j] = ' ';
             }
         }
     }
@@ -66,6 +101,8 @@ int main(){
     }
 
     rota_fuga(mat, inicio, fim);
+
+    remover_x(mat);
 
     for(string line : mat)
         cout << line << endl;
