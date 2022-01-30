@@ -22,6 +22,7 @@ struct Node {
 
 class Tree {
 public:
+    Tree();
     Tree(std::string serial);
     void inorder();   // percurso em ordem simetrica
     void preorder();  // percurso em pre-ordem
@@ -55,8 +56,12 @@ private:
     int _count_leaves(Node *node);
     Node* _delete_leaves_with_value(Node *node, int key);
     bool _identical(Node *node1, Node *node2);
-    Tree* _clone(Node *node);
+    Node* _clone(Node *node);
 };
+
+Tree::Tree() {
+    _root = nullptr;
+}
 
 // Construtor
 Tree::Tree(std::string serial) {
@@ -314,14 +319,30 @@ bool Tree::identical(Tree *t) {
 }
 
 bool Tree::_identical(Node *node1, Node *node2) {
-
+    if(node1 != nullptr && node2 != nullptr){
+        if(node1->key == node2->key){
+            return _identical(node1->left, node2->left) && _identical(node1->right, node2->right);
+        }
+        return false;
+    }
+    return true;
 }
 
 Tree* Tree::clone() {
-    return _clone(_root);
+    Tree *t = new Tree();
+    t->_root = _clone(_root);
+
+    return t;
 }
 
-Tree* Tree::_clone(Node *node) {
+Node* Tree::_clone(Node *node) {
+    if(node != nullptr) {
+        Node *new_node = new Node(node->key);
+        new_node->left = _clone(node->left);
+        new_node->right = _clone(node->right);
+        return new_node;
+    }
+    return node;
 
 }
 
