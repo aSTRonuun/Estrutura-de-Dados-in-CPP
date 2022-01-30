@@ -24,6 +24,7 @@ class Tree {
 public:
     Tree(std::string serial);
     void inorder();   // percurso em ordem simetrica
+    void preorder();  // percurso em pre-ordem
     void bshow();     // exibe a arvore de forma amigavel
     int size();
     int height();
@@ -32,10 +33,16 @@ public:
     int min_key();
     int total_internal_nodes();
     int um_filho();
+    void delete_leaves();
+    int count_leaves();
+    void delete_leaves_with_value(int key);
+    bool identical(Tree *t);
+    Tree *clone();
 private:
     Node *_root;
     Node *_clear(Node *root);
     void _inorder(Node *node);
+    void _preorder(Node *node);
     void _bshow(Node *node, std::string heranca);
     void _serializeTree(std::stringstream& ss, Node **node);
     int _size(Node *node);
@@ -44,6 +51,11 @@ private:
     int _min_key(Node *node);
     int _total_internal_nodes(Node *node);
     int _um_filho(Node *node);
+    Node* _delete_leaves(Node *node);
+    int _count_leaves(Node *node);
+    Node* _delete_leaves_with_value(Node *node, int key);
+    bool _identical(Node *node1, Node *node2);
+    Tree* _clone(Node *node);
 };
 
 // Construtor
@@ -86,7 +98,6 @@ Node *Tree::_clear(Node *node) {
 
 void Tree::inorder() {
     _inorder(_root);
-    std::cout << std::endl;
 }
 
 void Tree::_inorder(Node *node) {
@@ -94,6 +105,18 @@ void Tree::_inorder(Node *node) {
         _inorder(node->left);
         std::cout << node->key << " ";
         _inorder(node->right);  
+    }
+}
+
+void Tree::preorder() {
+    _preorder(_root);
+}
+
+void Tree::_preorder(Node *node) {
+    if(node != nullptr) {
+        std::cout << node->key << " ";
+        _preorder(node->left);
+        _preorder(node->right);
     }
 }
 
@@ -227,6 +250,79 @@ int Tree::_um_filho(Node *node){
         return count;
     }
     return 0;
+}
+
+void Tree::delete_leaves() {
+    _delete_leaves(_root);
+}
+
+Node* Tree::_delete_leaves(Node *node) {
+    if(node != nullptr){
+        if(node->left == nullptr && node->right == nullptr) {
+            delete node;
+            node = nullptr;
+            return node;
+        }else{
+            node->left = _delete_leaves(node->left);
+            node->right = _delete_leaves(node->right);
+        }
+        return node;
+    }
+    return node;
+}
+
+int Tree::count_leaves() {
+    return _count_leaves(_root);
+}
+
+int Tree::_count_leaves(Node *node) {
+    if(node != nullptr){
+        int count = 0;
+        count += _count_leaves(node->left);
+        count += _count_leaves(node->right);
+        if(node->left == nullptr && node->right == nullptr){
+            count++;
+        }
+        return count;
+    }
+    return 0;
+}
+
+void Tree::delete_leaves_with_value(int key) {
+    _delete_leaves_with_value(_root, key);
+}
+
+Node* Tree::_delete_leaves_with_value(Node *node, int key) {
+   if(node != nullptr){
+       if(node->right == nullptr && node->left == nullptr) {
+            if(node->key == key) {
+                delete node;
+                node = nullptr;
+                return node;
+            }
+            return node;
+        }
+        node->left = _delete_leaves_with_value(node->left, key);
+        node->right = _delete_leaves_with_value(node->right, key);
+        return node;
+   }
+   return node;
+}
+
+bool Tree::identical(Tree *t) {
+    return _identical(_root, t->_root);
+}
+
+bool Tree::_identical(Node *node1, Node *node2) {
+
+}
+
+Tree* Tree::clone() {
+    return _clone(_root);
+}
+
+Tree* Tree::_clone(Node *node) {
+
 }
 
 
