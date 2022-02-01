@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <climits>
+#include <stack>
 
 // Definicao do struct Node
 // Em C++ os structs podem ter funcoes-membro, como 
@@ -39,6 +40,8 @@ public:
     void delete_leaves_with_value(int key);
     bool identical(Tree *t);
     Tree *clone();
+    int size_iterative();
+    std::string find_path(int value);
 private:
     Node *_root;
     Node *_clear(Node *root);
@@ -57,6 +60,8 @@ private:
     Node* _delete_leaves_with_value(Node *node, int key);
     bool _identical(Node *node1, Node *node2);
     Node* _clone(Node *node);
+    int _size_iterative(Node *node);
+    std::string _find_path(Node *node, int value);
 };
 
 Tree::Tree() {
@@ -344,6 +349,60 @@ Node* Tree::_clone(Node *node) {
     }
     return node;
 
+}
+
+int Tree::size_iterative() {
+    return _size_iterative(_root);
+}
+
+int Tree::_size_iterative(Node *node) {
+    if(node != nullptr) {
+        std::stack<Node*> pilha;
+        pilha.push(node);
+        int count = 0;
+
+        while(!pilha.empty()){
+            Node *aux = pilha.top();
+            pilha.pop();
+            if(aux != nullptr) {
+                count++;
+                pilha.push(aux->right);
+                pilha.push(aux->left);
+            }
+        }
+        return count;
+    }
+    return 0;
+}
+
+std::string Tree::find_path(int value) {
+    std::string path1 = "";
+    path1 = _find_path(_root, value);
+
+    if(path1 == "")
+        return "!";
+    else
+        return path1;
+}
+
+/**
+ * Saida:
+ *  - se o valor existir
+ *   - mostre o caminho da raiz até o no
+ *   - indicando "l" ou "r" se o caminho é pelo filho esquerdo ou direito, respectivamente
+ *   - ponha um "x" para quando achar o no
+ * - se o valor nao existir
+ *  - mostre "!"
+ * 
+ */
+std::string Tree::_find_path(Node *node, int value) {
+    if(node != nullptr) {
+        std::string path = "";
+        
+
+
+    }
+    return "";
 }
 
 
