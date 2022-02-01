@@ -8,6 +8,8 @@ int main() {
 	string line;
     getline(cin, line);
     Tree bt(line);
-    cout << bt.find_path(2) << endl;
+    int n;
+    cin >> n;
+    cout << bt.find_path(n) << endl;
 	return 0;
 }

@@ -376,13 +376,7 @@ int Tree::_size_iterative(Node *node) {
 }
 
 std::string Tree::find_path(int value) {
-    std::string path1 = "";
-    path1 = _find_path(_root, value);
-
-    if(path1 == "")
-        return "!";
-    else
-        return path1;
+    return _find_path(_root, value);
 }
 
 /**
@@ -397,12 +391,19 @@ std::string Tree::find_path(int value) {
  */
 std::string Tree::_find_path(Node *node, int value) {
     if(node != nullptr) {
-        std::string path = "";
-        
-
-
+        if(node->key == value) {
+            return "x";
+        }
+        std::string left_path = _find_path(node->left, value);
+        if(left_path.back() == 'x') {
+            return "l" + left_path;
+        }
+        std::string right_path = _find_path(node->right, value);
+        if(right_path.back() == 'x') {
+            return "r" + right_path;
+        }
     }
-    return "";
+    return "!";
 }
 
 
