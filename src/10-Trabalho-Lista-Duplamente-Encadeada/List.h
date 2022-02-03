@@ -99,10 +99,18 @@ size_t List::size() const {
 }
 
 void List::clear() {
-
+    while(head != nullptr) {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+    }
+    m_size = 0;
 }
 
 Item& List::front() {
+    if (empty()) {
+        throw std::out_of_range("List is empty");
+    }
     return head->item;
 }
 
@@ -114,6 +122,22 @@ Item& List::back() {
 }
 
 void List::push_front(const Item &data) {
+    if(empty()) {
+        head = new Node(data);
+        head->next = head;
+        head->prev = head;
+    }else{
+        Node *last = head->prev;
+
+        Node *newNode = new Node(data);
+        newNode->next = head;
+        newNode->prev = last;
+
+        last->next = newNode;
+        head->prev = newNode;
+
+        head = newNode;
+    }
 
 }
 
