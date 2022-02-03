@@ -153,12 +153,18 @@ Node *BST::sucessor(Node *x, Node *raiz) {
     return ancestral_sucessor(x, raiz);
 }
 
+// Funcao para retornar o sucessor de x a partir da raiz 
 Node *BST::ancestral_sucessor(Node *x, Node *raiz) {
-    if(x == nullptr || raiz == nullptr || x == raiz) {
-        return nullptr;
+    Node *succ = nullptr;
+    while(x->key != raiz->key) {
+        if(x->key < raiz->key) {
+            succ = raiz;
+            raiz = raiz->left;
+        }else {
+            raiz = raiz->right;
+        }
     }
-    
-    
+    return succ;
 }
 
 int BST::successor(int k) {
@@ -178,15 +184,38 @@ int BST::successor(int k) {
 // passado como parametro. A funcao tambem recebe 
 // como parametro a raiz da arvore.
 Node* BST::predecessor(Node *x, Node* raiz) {
-    // TODO
+    if(x == nullptr || raiz == nullptr) {
+        return nullptr;
+    }else if(x->left != nullptr) {
+        return maximum(x->left);
+    }
+    return ancestral_predecessor(x, raiz);
 }
 
 Node *BST::ancestral_predecessor(Node *x, Node* raiz) {
-    // TODO
+    Node *pred = nullptr;
+    while(x->key != raiz->key) {
+        if(x->key > raiz->key) {
+            pred = raiz;
+            raiz = raiz->right;
+        }else {
+            raiz = raiz->left;
+        }
+    }
+    return pred;
 }
 
 int BST::predecessor(int k) {
-    // TODO
+    Node *temp = search(root, k);
+    if(temp != nullptr) {
+        Node *succ = predecessor(temp, root);
+        if(succ != nullptr) {
+            return succ->key;
+        } else {
+            throw std::runtime_error("Error: No processor found");
+        }
+    }
+    else throw std::runtime_error("Error: chave inexistente");
 }
 
 #endif

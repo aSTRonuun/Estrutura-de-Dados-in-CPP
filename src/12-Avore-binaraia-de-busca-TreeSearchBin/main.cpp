@@ -28,15 +28,15 @@ int main()
     int v;
 	cin >> v;
 
-    // try
-    // {
-    //     int pred = arv.predecessor(v);
-    //     cout << "antecessor(" << v << ") = " << pred << endl;
-    // }
-    // catch(const std::runtime_error& e)
-    // {
-    //     cout << v << " nao tem antecessor ou nao esta na arvore" << endl;
-    // }
+    try
+    {
+        int pred = arv.predecessor(v);
+        cout << "antecessor(" << v << ") = " << pred << endl;
+    }
+    catch(const std::runtime_error& e)
+    {
+        cout << v << " nao tem antecessor ou nao esta na arvore" << endl;
+    }
 
     try
     {
