@@ -5,48 +5,40 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
-#include "bts.h"
+#include "bstp.h"
+
 using namespace std;
 
 int main()
 {
 	BST arv;
-	string skeys;
-	
-	getline(cin, skeys); // read a string containing all keys separated by spaces
+	string keys;
+	getline(cin, keys); // ler uma string com todas as chaves
 
-	stringstream ss { skeys };
+	stringstream ss { keys };
 	int value;
 
-	while(ss >> value) {
-		arv.add(value);
-	}
+	while(ss >> value) 
+		arv.add(value); // Adiciona chaves na arvore
 
-	cout << "minimo: " << arv.minimum() << endl;
-	cout << "maximo: " << arv.maximum() << endl;
+	arv.inorderParent();
 
-    int v;
-	cin >> v;
+	cout << endl;
 
-    try
-    {
-        int pred = arv.predecessor(v);
-        cout << "antecessor(" << v << ") = " << pred << endl;
-    }
-    catch(const std::runtime_error& e)
-    {
-        cout << v << " nao tem antecessor ou nao esta na arvore" << endl;
-    }
+	if(arv.contains(5))
+		cout << "Contem 5" << endl;
+	else
+		cout << "Nao contem 5" << endl;
 
-    try
-    {
-        int succ = arv.successor(v);
-        cout << "sucessor(" << v << ") = " << succ << endl;
-    }
-    catch(const std::runtime_error& e)
-    {
-        cout << v << " nao tem sucessor ou nao esta na arvore" << endl;
-    }
-    
+	if(arv.contains(78))
+		cout << "Contem 78" << endl;
+	else
+		cout << "Nao contem 78" << endl;
+
+	if(arv.contains(0))
+		cout << "Contem 0" << endl;
+	else
+		cout << "Nao contem 0" << endl;
+	
 	return 0;
 }

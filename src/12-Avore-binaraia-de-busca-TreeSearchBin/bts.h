@@ -2,6 +2,7 @@
 #define BST_H
 #include <stdexcept>
 #include <iostream>
+#include <stack>
 
 /*******************************
  * Definicao do struct Node
@@ -12,7 +13,7 @@ struct Node {
     Node *right;
 
     Node(int k, Node *l, Node *r)
-        : key(k), left(l), right(r) 
+        : key(k), left(l), right(r)
         { }
 
     ~Node() {
@@ -28,12 +29,16 @@ public:
     BST();
     ~BST();
     void bshow();
-    void add(int key);       // Adicionar chave 
+    void add(int key);       // Adicionar chave
+    bool add_iterative(int key);
     bool contains(int key);  // contem chave key?
+    bool contains_iterative(int key);
     int minimum();           // Devolve chave minima
     int maximum();           // Devolve chave maxima
     int successor(int k);    // Devolve chave sucessora de k
     int predecessor(int k);  // Devolve chave antecessora de k
+    Node *search_iterative(int key);
+    void inorderParent();
 private:
     Node *root;
     void bshow(Node *node, std::string heranca);
@@ -216,6 +221,69 @@ int BST::predecessor(int k) {
         }
     }
     else throw std::runtime_error("Error: chave inexistente");
+}
+
+// Funcao publica 'add'
+// Esta funcao deve obrigatoriamente ser iterativa.
+// Esta funcao adiciona um no com chave k na arvore e: 
+// (1) devolve true em caso de sucesso;
+// (2) devolve false caso contrario.
+// Lembre-se que nao podem haver chaves repetidas na nossa arvore.
+bool BST::add_iterative(int key) {
+    Node *temp = root;
+    while(temp != nullptr) {
+        if(key == temp->key) {
+            return false;
+        }else if(key < temp->key) {
+            if(temp->left == nullptr) {
+                temp->left = new Node(key, nullptr, nullptr);
+                return true;
+            }
+            temp = temp->left;
+        }else {
+            if(temp->right == nullptr) {
+                temp->right = new Node(key, nullptr, nullptr);
+                return true;
+            }
+            temp = temp->right;
+        }
+    }
+    return false;
+}
+
+// Funcao publica 'contains'
+// Esta funcao devolve 'true' se a arvore contem a chave k; 
+// e devolve 'false' caso contrário.
+bool BST::contains_iterative(int key) {
+    Node *temp = root;
+    while(temp != nullptr) {
+        if(key == temp->key) {
+            return true;
+        }else if(key < temp->key) {
+            temp = temp->left;
+        }else{
+            temp = temp->right;
+        }
+    }
+    return false;
+}
+
+// Funcao privada 'search'
+// Esta funcao devolve o ponteiro para o no que 
+// contem a chave k se ela existir na arvore;
+// caso contrario, devolve nullptr;
+Node* BST::search_iterative(int key) {
+    Node *temp = root;
+    while(temp != nullptr) {
+        if(key == temp->key) {
+            return temp;
+        }else if(key < temp->key) {
+            temp = temp->left;
+        }else {
+            temp = temp->right;
+        }
+    }
+    return nullptr;
 }
 
 #endif
