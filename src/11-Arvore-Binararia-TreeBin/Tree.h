@@ -42,6 +42,7 @@ public:
     Tree *clone();
     int size_iterative();
     std::string find_path(int value);
+    int node_depth(int value);
 private:
     Node *_root;
     Node *_clear(Node *root);
@@ -62,6 +63,7 @@ private:
     Node* _clone(Node *node);
     int _size_iterative(Node *node);
     std::string _find_path(Node *node, int value);
+    int _node_depth(Node *node, int value);
 };
 
 Tree::Tree() {
@@ -392,19 +394,59 @@ std::string Tree::find_path(int value) {
 std::string Tree::_find_path(Node *node, int value) {
     if(node != nullptr) {
         if(node->key == value) {
-            return "x";
+            return "x";                               
         }
-        std::string left_path = _find_path(node->left, value);
+        std::string left_path = _find_path(node->left, value);                               
         if(left_path.back() == 'x') {
             return "l" + left_path;
-        }
+        }                
         std::string right_path = _find_path(node->right, value);
         if(right_path.back() == 'x') {
             return "r" + right_path;
         }
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     return "!";
 }
+                                    
+int Tree::node_depth(int value) {
+    return _node_depth(_root, value);
+}
+
+int Tree::_node_depth(Node *node, int value) {
+    // Se o valor nao existis, retorna -1
+    if(node != nullptr) {
+        // Se o valor existir, retorna a profundidade do no
+        if(node->key == value) {
+            return 0;
+        }
+        // Se o valor nao existir, retorna a profundidade do no mais a profundidade do filho mais profundo
+        int left_depth = _node_depth(node->left, value);
+        if(left_depth != -1) {
+            return left_depth + 1;
+        }
+        // 
+        int right_depth = _node_depth(node->right, value);
+        if(right_depth != -1) {
+            return right_depth + 1;
+        }
+    }
+    return -1;
+
+}
+
+// Verifica se o node é diferente de nulo
+// Se o node for diferente de nulo
+//     Verifica se o node é igual ao valor
+//         Se for igual, retorna a profundidade do node
+    
+//     Cria um contador para receber a funcao recursivamente para calcular a profundidade do filho esquerdo
+//     Verifica se o contato é diferente de -1
+//         Se for diferente de -1, retorna a profundidade do node mais a profundidade do filho mais profundo esquerdo
+    
+//     Faz a mesma coisa para o filho direito
+    
+// Se o node for igual a nulo
+//     retorna -1
 
 
 #endif

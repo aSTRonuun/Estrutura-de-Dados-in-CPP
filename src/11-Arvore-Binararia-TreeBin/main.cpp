@@ -10,6 +10,6 @@ int main() {
     Tree bt(line);
     int n;
     cin >> n;
-    cout << bt.find_path(n) << endl;
+    cout << bt.node_depth(n) << endl;
 	return 0;
 }
