@@ -48,5 +48,7 @@ int main() {
         }
     }
 
+    delete[] indices;
+
     return 0;
 }
