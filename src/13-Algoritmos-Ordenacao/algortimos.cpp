@@ -51,3 +51,62 @@ void selectionsort(int A[], int n) {
         A[min] = aux;
     }
 }
+
+/* A funcao recebe vetores crescentes A[p..q] e A[q+1..r] 
+ * e rearranja A[p..r] em ordem crescente */
+void Intercala (int A[], int p, int q, int r) {
+  int *W = new int[r-p+1]; // Vetor auxiliar  
+  int i = p;
+  int j = q+1;
+  int k = 0;
+  
+  // Intercala A[p..q] e A[q+1..r]
+  while (i <= q && j <= r) {
+    if (A[i] <= A[j])
+      W[k++] = A[i++];
+    else
+      W[k++] = A[j++];
+  }
+  while (i <= q) W[k++] = A[i++];
+  while (j <= r) W[k++] = A[j++];
+  
+  // Copia vetor ordenado W para o vetor A
+  for (i = p; i <= r; i++)
+    A[i] = W[i-p];
+    
+  delete[] W; // libera memoria alocada
+}
+
+void mergesort(int A[], int p, int r) {
+    if (p < r) {
+        // Dividir
+        int q = (p + r) / 2; 
+        // Conquistar
+        mergesort(A, p, q);
+        mergesort(A, q + 1, r);
+        // Combinar
+        Intercala(A, p, q, r);
+    }
+}
+
+int separa (int A[], int p, int r) {
+    int c = A[r];
+    int j = p;
+    for(int k=p; k<r; k++) {
+        if(A[k] <= c) {
+            std::swap(A[k], A[j]);
+            j++;
+        }
+    }
+    A[r] = A[j];
+    A[j] = c;
+    return j;
+}
+
+void quicksort(int A[], int p, int r) {
+    if (p < r) {
+        int i = separa(A, p, r);
+        quicksort(A, p, i-1);
+        quicksort(A, i+1, r);
+    }
+}
