@@ -1,32 +1,65 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
-/**
- * A ordenação de uma pilha é feita por uma sequência de “viradas” de tapiocas. Uma virada consiste em inserir uma espátula entre duas tapiocas em uma pilha e virando (invertendo) todas as panquecas em a espátula (invertendo a subpilha).
- * 
- * Exemplo:
- * 5
-    5 1 2 3 4
+int maior(vector<int> vec, int tam) {
+    int maior = 0;
+    for (int i = 1; i <= tam; i++)
+        if (vec[i] > vec[maior])
+            maior = i;
+    return maior;
+};
 
-    Saida:
+bool ordenado(vector<int> vec) {
+    int tam = vec.size() - 1;
+    for (int i = 0; i < tam; i++)
+        if (vec[i] > vec[i + 1])
+            return false;
+    return true;
+};
 
-    1 2 0
- */
-void tapiocasort(int A[], int n) {
-    while()
-}
+void inverter(vector<int> &vec, int index) {
+    for (int i = 0, j = index; i < j; i++, j--)
+        swap(vec[i], vec[j]);
+};
+
+void print(vector<int> &vec) {
+    int n = vec.size();
+    for (int i = 0; i < n; i++)
+        cout << vec[i] << " ";
+    cout << "0" << endl;
+};
+
+void viradaTapioca(vector<int> &vec) {
+    int countViradas = 0;
+    int tam = vec.size() - 1;
+    bool estaOrdenado = false;
+    vector<int> vecAux;
+    while (!estaOrdenado) {
+        int maiorNum = maior(vec, tam);
+        if(maiorNum == 0) {
+            inverter(vec, tam);
+            countViradas++;
+            vecAux.push_back(vec.size() - 1);
+        }else {
+            inverter(vec, maiorNum);
+            countViradas++;
+            vecAux.push_back(maiorNum);
+        }
+
+        if(ordenado(vec)) {
+            estaOrdenado = true;
+        }
+    }
+    cout << countViradas << endl;
+
+};
 
 int main() {
-
     int n;
     cin >> n;
-    int A[n];
-    for(int i=0; i<n; i++) {
-        cin >> A[i];
-    }
-
-    tapiocasort(A, n);
-
-    return 0;
+    vector<int> tapiocas;
+    for (int i = 0; i < n; i++)
+        cin >> tapiocas[i];
+    viradaTapioca(tapiocas);
 }
